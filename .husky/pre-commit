@@ -1,5 +1,1 @@
 npm run precommit
-
-# Ignore LWC Jest test
-
-npm test -- --testPathIgnorePatterns=force-app/main/default/lwc
