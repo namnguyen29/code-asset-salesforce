@@ -3,7 +3,12 @@
   <types>
 		<members>MaintenanceRequestHelper</members>
 		<members>MaintenanceRequestHelperTest</members>
+		<members>WarehouseCalloutService</members>
 		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>MaintenanceRequest</members>
+		<name>ApexTrigger</name>
 	</types>
 	<version>64.0</version>
 </Package>
