@@ -8,4 +8,6 @@
 .sf
 .vscode
 
+*.xml
+
 coverage/

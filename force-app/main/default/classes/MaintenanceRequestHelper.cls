@@ -20,27 +20,11 @@ public with sharing class MaintenanceRequestHelper {
     }
 
     if (closedRequests.size() > 0) {
-      Product2[] equipments = [
-        SELECT Maintenance_Cycle__c, Id
-        FROM Product2
-        WHERE Id IN :equipmentIds
-        ORDER BY Maintenance_Cycle__c ASC
-      ];
+      Product2[] equipments = getEquipments(equipmentIds);
       Integer minCycle = (Integer) equipments.get(0).Maintenance_Cycle__c;
       Date newRequestClosedDate = Date.today().addDays(minCycle);
+      Case[] newRequests = createNewRequests(closedRequests, newRequestClosedDate);
 
-      Case[] newRequests = new List<Case>();
-      for (Case closedRequest : closedRequests) {
-        Case newRequest = new Case();
-        newRequest.Status = 'New';
-        newRequest.Type = 'Routine Maintenance';
-        newRequest.Vehicle__c = closedRequest.Vehicle__c;
-        newRequest.Origin = closedRequest.Origin;
-        newRequest.Subject = 'New Maintenance Request';
-        newRequest.Date_Reported__c = Date.today();
-        newRequest.Date_Due__c = newRequestClosedDate;
-        newRequests.add(newRequest);
-      }
       insert newRequests;
 
       Equipment_Maintenance_Item__c[] equipmentMaintenanceItems = new List<Equipment_Maintenance_Item__c>();
@@ -58,5 +42,32 @@ public with sharing class MaintenanceRequestHelper {
 
       insert equipmentMaintenanceItems;
     }
+  }
+
+  private static Case[] createNewRequests(Case[] closedRequests, Date newRequestClosedDate) {
+    Case[] newRequests = new List<Case>();
+
+    for (Case closedRequest : closedRequests) {
+      Case newRequest = new Case();
+      newRequest.Status = 'New';
+      newRequest.Type = 'Routine Maintenance';
+      newRequest.Vehicle__c = closedRequest.Vehicle__c;
+      newRequest.Origin = closedRequest.Origin;
+      newRequest.Subject = 'New Maintenance Request';
+      newRequest.Date_Reported__c = Date.today();
+      newRequest.Date_Due__c = newRequestClosedDate;
+      newRequests.add(newRequest);
+    }
+
+    return newRequests;
+  }
+
+  private static Product2[] getEquipments(Id[] equipmentIds) {
+    return [
+      SELECT Maintenance_Cycle__c, Id
+      FROM Product2
+      WHERE Id IN :equipmentIds
+      ORDER BY Maintenance_Cycle__c ASC
+    ];
   }
 }
