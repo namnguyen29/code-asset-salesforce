@@ -1,6 +1,7 @@
 public with sharing class MaintenanceRequestHelper {
   public static void updateWorkOrders(Case[] requests) {
     Case[] closedRequests = new List<Case>();
+    Case[] newRequests = new List<Case>();
     Id[] equipmentIds = new List<Id>();
     Id[] closedRequestIds = new List<Id>();
 
@@ -20,16 +21,10 @@ public with sharing class MaintenanceRequestHelper {
     }
 
     if (closedRequests.size() > 0) {
-      Product2[] equipments = [
-        SELECT Maintenance_Cycle__c, Id
-        FROM Product2
-        WHERE Id IN :equipmentIds
-        ORDER BY Maintenance_Cycle__c ASC
-      ];
+      Product2[] equipments = getEquipments(equipmentIds);
       Integer minCycle = (Integer) equipments.get(0).Maintenance_Cycle__c;
       Date newRequestClosedDate = Date.today().addDays(minCycle);
 
-      Case[] newRequests = new List<Case>();
       for (Case closedRequest : closedRequests) {
         Case newRequest = new Case();
         newRequest.Status = 'New';
@@ -58,5 +53,14 @@ public with sharing class MaintenanceRequestHelper {
 
       insert equipmentMaintenanceItems;
     }
+  }
+
+  private static Product2[] getEquipments(Id[] equipmentIds) {
+    return [
+      SELECT Maintenance_Cycle__c, Id
+      FROM Product2
+      WHERE Id IN :equipmentIds
+      ORDER BY Maintenance_Cycle__c ASC
+    ];
   }
 }
