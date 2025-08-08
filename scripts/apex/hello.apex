@@ -8,4 +8,6 @@
 string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 
-System.enqueueJob(new WarehouseCalloutService());
+WarehouseSyncSchedule warehouseSchedule = new WarehouseSyncSchedule();
+String schedulable = '0 0 1 * * ?';
+System.schedule('WarehouseSyncScheduleJob', schedulable, warehouseSchedule);
