@@ -34,6 +34,7 @@ public with sharing class MaintenanceRequestHelper {
         equipmentMaintenanceItems.add(emItem);
 
         /*dadsasd*/
+        ////
       }
 
       for (Case newRequest : newRequests) {
