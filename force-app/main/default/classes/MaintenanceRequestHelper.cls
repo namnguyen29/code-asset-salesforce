@@ -32,8 +32,6 @@ public with sharing class MaintenanceRequestHelper {
         Equipment_Maintenance_Item__c emItem = new Equipment_Maintenance_Item__c();
         emItem.Equipment__c = equipmentId;
         equipmentMaintenanceItems.add(emItem);
-
-        /*dadsasd*/
       }
 
       for (Case newRequest : newRequests) {
