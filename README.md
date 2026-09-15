@@ -13,6 +13,7 @@ Before you start, make sure you have:
 - **A development org** - Sign up for a free Developer Edition org [here](https://developer.salesforce.com/signup).
 - **Dev Hub enabled** (optional, required to create scratch orgs) - You can enable Dev Hub in your development org under Setup > Dev Hub. See [Provide Developers Access to Salesforce DX Tools](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_dx_tools.htm).
 - **Org URL** `nampractice-dev-ed.develop.my.salesforce.com`
+- **Username**: `quocnam-nguyen@agentforce.com.dev`
 
 ## Project Structure
 
